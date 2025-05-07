@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>児童虐待スクリーニングツール</title>
+  <style>
+    body { font-family: sans-serif; background: #fff; color: #000; padding: 20px; }
+    h1 { color: #ff6600; }
+    .question { margin-bottom: 10px; }
+    .result { border: 2px solid #ff6600; padding: 15px; margin-top: 20px; }
+    button { background: #ff6600; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>児童虐待スクリーニングツール</h1>
+  <p>※匿名・非保存。気になる点があれば専門機関へご相談を。</p>
+
+  <form id="abuseForm">
+    <div class="question"><strong>A：子どもの様子</strong></div>
+    <label><input type="checkbox" name="q1"> 頻繁にケガやアザがある</label><br>
+    <label><input type="checkbox" name="q2"> 感情が乏しく反応がない</label><br>
+    <label><input type="checkbox" name="q3"> 「死にたい」と言う</label><br>
+    <label><input type="checkbox" name="q4"> 学校・成績に急な変化</label><br>
+    <label><input type="checkbox" name="q5"> 性的な言動が目立つ</label><br>
+
+    <div class="question"><strong>B：養育者の対応</strong></div>
+    <label><input type="checkbox" name="q6"> 体罰をしつけとして容認</label><br>
+    <label><input type="checkbox" name="q7"> 人格否定や暴言が多い</label><br>
+    <label><input type="checkbox" name="q8"> 放置・ネグレクト傾向</label><br>
+    <label><input type="checkbox" name="q9"> 虐待の通報・相談歴がある</label><br>
+    <label><input type="checkbox" name="q10"> 養育能力が乏しい</label><br>
+    <label><input type="checkbox" name="q11"> 子どもの話を聞かない</label><br>
+
+    <div class="question"><strong>C：家庭環境</strong></div>
+    <label><input type="checkbox" name="q12"> DVや暴力が日常的にある</label><br>
+    <label><input type="checkbox" name="q13"> 生活困窮・借金・失業</label><br>
+    <label><input type="checkbox" name="q14"> 精神疾患・依存症の家族</label><br>
+    <label><input type="checkbox" name="q15"> 住環境が不衛生・不安定</label><br>
+    <label><input type="checkbox" name="q16"> 同居人の情報が不明</label><br>
+
+    <div class="question"><strong>D：保護者の主観</strong></div>
+    <label><input type="checkbox" name="q17"> 子育てがつらい・逃げたい</label><br>
+    <label><input type="checkbox" name="q18"> 「いなければよかった」発言</label><br>
+    <label><input type="checkbox" name="q19"> 支援を拒否する傾向がある</label><br>
+    <label><input type="checkbox" name="q20"> 自身も被虐待経験がある</label><br>
+
+    <div class="question"><strong>E：通報・行政の対応歴</strong></div>
+    <label><input type="checkbox" name="q21"> 児童相談所の対応歴がある</label><br>
+    <label><input type="checkbox" name="q22"> 他の兄弟姉妹の虐待歴</label><br>
+    <label><input type="checkbox" name="q23"> 医療機関からの通告歴</label><br>
+    <label><input type="checkbox" name="q24"> 学校・保育園から指摘あり</label><br>
+
+    <button type="button" onclick="checkAbuse()">判定する</button>
+  </form>
+
+  <div id="result" class="result" style="display:none;"></div>
+
+  <script>
+    function checkAbuse() {
+      const form = document.forms["abuseForm"];
+      let score = 0;
+      for (let i = 0; i < form.elements.length; i++) {
+        if (form.elements[i].type === "checkbox" && form.elements[i].checked) {
+          score++;
+        }
+      }
+
+      let result = document.getElementById("result");
+      result.style.display = "block";
+
+      if (score >= 15) {
+        result.innerHTML = "<strong style='color:red'>【重大リスク】</strong><br>ただちに専門機関に通報・相談してください。";
+      } else if (score >= 8) {
+        result.innerHTML = "<strong style='color:orange'>【中リスク】</strong><br>虐待の疑いがあります。早めの相談・支援を受けてください。";
+      } else if (score >= 4) {
+        result.innerHTML = "<strong style='color:blue'>【軽度リスク】</strong><br>注意が必要です。子どもや家庭の状態を見守りましょう。";
+      } else {
+        result.innerHTML = "<strong style='color:green'>【リスク低】</strong><br>現時点での深刻なリスクは低いと考えられます。";
+      }
+    }
+  </script>
+</body>
+</html>
